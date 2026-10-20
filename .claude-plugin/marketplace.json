@@ -1,0 +1,22 @@
+{
+  "name": "justkeepswimming-marketplace",
+  "owner": {
+    "name": "Qais Alkurdi",
+    "url": "https://github.com/cyber-qais"
+  },
+  "metadata": {
+    "description": "Context-aware handoffs and autonomous build pipelines for Claude Code",
+    "version": "2.4.2"
+  },
+  "plugins": [
+    {
+      "name": "justkeepswimming",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/cyber-qais/justkeepswimming.git"
+      },
+      "description": "Scrum-master plan execution for Claude Code — parallel dev agents, review gates, a live board, and open-door merge windows",
+      "version": "2.4.2"
+    }
+  ]
+}

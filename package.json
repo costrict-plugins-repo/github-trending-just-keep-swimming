@@ -1,0 +1,31 @@
+{
+  "name": "justkeepswimming",
+  "version": "2.4.2",
+  "description": "Scrum-master plan execution for Claude Code \u2014 parallel dev agents, review gates, a live board, and open-door merge windows",
+  "author": "Qais Alkurdi",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/cyber-qais/justkeepswimming",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyber-qais/justkeepswimming.git"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "agent-skills",
+    "plan-management",
+    "context-preservation",
+    "handoffs",
+    "thinking-protocol",
+    "ai-agents",
+    "night-build"
+  ],
+  "files": [
+    ".claude-plugin/",
+    "commands/",
+    "SKILL.md",
+    "THINKING.md",
+    "LICENSE",
+    "scripts/"
+  ]
+}

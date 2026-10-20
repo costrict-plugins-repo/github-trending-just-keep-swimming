@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just Keep Swimming — Scrum-Master Plan Execution for Claude Code</title>
+    <style>
+        :root {
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --blue-light: #dbeafe;
+            --cyan: #06b6d4;
+            --cyan-dark: #0891b2;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--slate-800);
+            line-height: 1.6;
+            background: var(--slate-50);
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            background: linear-gradient(135deg, var(--slate-900) 0%, #1a365d 50%, #0c4a6e 100%);
+            color: white;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content { position: relative; max-width: 800px; margin: 0 auto; }
+
+        .hero-fish {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: swim 3s ease-in-out infinite;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .hero-logo:hover { opacity: 1; }
+
+        .hero-logo img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+
+        .hero-logo span {
+            font-size: 0.8rem;
+            color: #64748b;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(10px) rotate(2deg); }
+            75% { transform: translateX(-10px) rotate(-2deg); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 span { color: var(--cyan); }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--cyan);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .hero-cta:hover { background: var(--cyan-dark); }
+
+        /* ---- Sections ---- */
+        .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+        section { padding: 4rem 0; }
+
+        .section-label {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--slate-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        section h2 span { color: var(--blue); }
+
+        section > .container > p {
+            font-size: 1.1rem;
+            color: var(--slate-600);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        /* ---- Problem ---- */
+        .problem { background: white; border-bottom: 1px solid var(--slate-200); }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .problem-card {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .problem-card .icon {
+            width: 40px;
+            height: 40px;
+            background: #fee2e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1rem;
+            color: var(--slate-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-card p {
+            font-size: 0.9rem;
+            color: var(--slate-600);
+            line-height: 1.5;
+        }
+
+        /* ---- Solution ---- */
+        .solution { background: var(--slate-50); }
+
+        .flow {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            border: 1px solid var(--slate-200);
+            padding: 1.5rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .flow-step:first-child { border-radius: 12px 0 0 12px; }
+        .flow-step:last-child { border-radius: 0 12px 12px 0; }
+
+        .flow-step .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .flow-step h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+        .flow-step p { font-size: 0.85rem; color: var(--slate-500); }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--slate-300);
+            padding: 0 0.25rem;
+        }
+
+        /* ---- Features ---- */
+        .features { background: white; border-top: 1px solid var(--slate-200); }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .feature-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+        .feature-card .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-blue { background: var(--blue-light); color: var(--blue-dark); }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-amber { background: #fef3c7; color: #92400e; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+        .feature-card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.9rem; color: var(--slate-600); line-height: 1.5; }
+
+        /* ---- Handoff Preview ---- */
+        .handoff-preview { background: var(--slate-50); border-top: 1px solid var(--slate-200); }
+
+        .handoff-doc {
+            background: white;
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            max-width: 700px;
+            margin: 2rem auto 0;
+        }
+
+        .handoff-doc-header {
+            background: var(--slate-800);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .handoff-doc-header .dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .handoff-doc-body {
+            padding: 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: var(--slate-700);
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .handoff-doc-body .hl { color: var(--blue); font-weight: 600; }
+        .handoff-doc-body .hg { color: var(--green); }
+        .handoff-doc-body .ha { color: var(--amber); }
+        .handoff-doc-body .hr { color: var(--red); }
+        .handoff-doc-body .dim { color: var(--slate-400); }
+
+        /* ---- Modes ---- */
+        .modes { background: white; border-top: 1px solid var(--slate-200); }
+
+        .mode-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mode-card {
+            border: 2px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .mode-card.primary { border-color: var(--cyan); }
+
+        .mode-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-card .mode-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: var(--slate-100);
+            color: var(--slate-500);
+        }
+
+        .mode-card.primary .mode-tag {
+            background: #cffafe;
+            color: var(--cyan-dark);
+        }
+
+        .mode-card p { font-size: 0.9rem; color: var(--slate-600); margin-bottom: 1rem; }
+
+        .mode-card code {
+            display: block;
+            background: var(--slate-800);
+            color: #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        /* ---- Install ---- */
+        .install {
+            background: linear-gradient(135deg, var(--slate-900) 0%, #1a365d 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .install h2 { color: white; }
+        .install p { color: #94a3b8; margin: 0 auto 2rem; }
+
+        .install-steps {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .install-step {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .install-step h3 {
+            font-size: 0.9rem;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .install-step code {
+            display: block;
+            background: rgba(0,0,0,0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            margin-top: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .install-step p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            text-align: left;
+            margin-bottom: 0;
+        }
+
+        .install-note {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .install-note a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        /* ---- Thinking Protocol ---- */
+        .thinking { background: white; border-top: 1px solid var(--slate-200); }
+
+        .thinking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .thinking-card {
+            border: 1px solid var(--slate-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .thinking-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--cyan);
+        }
+
+        .thinking-card .principle-num {
+            width: 28px;
+            height: 28px;
+            background: var(--slate-900);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .thinking-card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--slate-800); }
+        .thinking-card p { font-size: 0.88rem; color: var(--slate-600); line-height: 1.55; }
+
+        .thinking-card .anti-pattern {
+            margin-top: 0.75rem;
+            padding: 0.6rem 0.8rem;
+            background: #fef2f2;
+            border-left: 3px solid var(--red);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+            color: var(--slate-700);
+        }
+
+        .thinking-card .correct-pattern {
+            margin-top: 0.5rem;
+            padding: 0.6rem 0.8rem;
+            background: #f0fdf4;
+            border-left: 3px solid var(--green);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.8rem;
+            color: var(--slate-700);
+        }
+
+        .thinking-meta {
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: var(--slate-900);
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .thinking-meta blockquote {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .thinking-meta p { font-size: 0.9rem; color: #94a3b8; }
+
+        /* ---- Comparison ---- */
+        .comparison { background: var(--slate-50); border-top: 1px solid var(--slate-200); }
+
+        .comparison table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .comparison th {
+            background: var(--slate-100);
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--slate-600);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .comparison td {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--slate-100);
+            color: var(--slate-700);
+        }
+
+        .comparison tr:last-child td { border-bottom: none; }
+
+        /* ---- Footer ---- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--slate-500);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--slate-200);
+        }
+
+        footer a { color: var(--blue); text-decoration: none; }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--slate-200);
+        }
+
+        .footer-brand img {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+        }
+
+        .footer-brand span {
+            font-size: 0.85rem;
+            color: var(--slate-500);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero .subtitle { font-size: 1.05rem; }
+            .flow { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); justify-content: center; }
+            .flow-step:first-child, .flow-step:last-child { border-radius: 12px; }
+            .mode-comparison { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-logo">
+            <span></span>
+        </div>
+        <div class="hero-fish">><(((*></div>
+        <h1>Just Keep <span>Swimming</span></h1>
+        <p class="subtitle">v2: scrum-master execution for Claude Code &mdash; parallel dev agents, review gates, and a live board. Your AI ships multi-phase plans start to finish, no matter how many sessions it takes.</p>
+        <a href="#install" class="hero-cta">Install in 10 seconds &darr;</a>
+    </div>
+</section>
+
+<!-- Problem -->
+<section class="problem">
+    <div class="container">
+        <div class="section-label">The Problem</div>
+        <h2>Context rot is <span>silent</span> and <span>expensive</span></h2>
+        <p>When an AI agent's context window fills up, the system compresses earlier messages and the agent keeps working on subtly wrong assumptions. On big plans the damage compounds: phases run one at a time even when they're independent, and the agent burns its own context reading source files until its early decisions turn to fog.</p>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="icon">&#128260;</div>
+                <h3>Repeated questions</h3>
+                <p>The agent re-asks things it already resolved an hour ago, wasting time and breaking flow.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">&#128679;</div>
+                <h3>Architectural drift</h3>
+                <p>Implementations silently deviate from decisions made earlier in the session when those decisions get compressed away.</p>
+            </div>
+            <div class="problem-card">
+                <div class="icon">&#128165;</div>
+                <h3>Regression by amnesia</h3>
+                <p>The agent breaks things it just built because it forgot <em>why</em> they were built that way.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solution -->
+<section class="solution">
+    <div class="container">
+        <div class="section-label">The Solution</div>
+        <h2>One agent <span>coordinates</span>. Many agents build.</h2>
+        <p>v2 turns your session into a scrum master. It dispatches parallel dev agents with disjoint file ownership, reviews every phase before merging, ships as it goes, and keeps one live board so any session can resume from two file reads.</p>
+        <div class="flow">
+            <div class="flow-step">
+                <div class="step-num">1</div>
+                <h3>Plan</h3>
+                <p>Create or import an implementation plan</p>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">2</div>
+                <h3>Dispatch</h3>
+                <p>Parallel dev agents, each owning its files</p>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">3</div>
+                <h3>Review &amp; merge</h3>
+                <p>Adversarial gate, then ship while the next sprint runs</p>
+            </div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">
+                <div class="step-num">4</div>
+                <h3>Board</h3>
+                <p>Live state; any session resumes from two reads</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
+    <div class="container">
+        <div class="section-label">Features</div>
+        <h2>What's <span>in the box</span></h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="badge badge-blue">Core</div>
+                <h3>The live board</h3>
+                <p>One BOARD.md per plan holds phase states, commit SHAs, decisions, and learnings with exact file:line references. Updated at every sync point, so a crash loses one sprint at most.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-green">Smart</div>
+                <h3>Audited against git</h3>
+                <p>scripts/board-check.js verifies every merged claim, the progress count, the ship SHA, and the door state against git itself. A board that lies blocks dispatch until it's fixed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-amber">Flexible</div>
+                <h3>Three lanes</h3>
+                <p>Lite for half-day jobs (one file, one gate), solo for small serial plans, scrum for parallel agent orchestration. Route by flag or by scope.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-blue">Precise</div>
+                <h3>The tier doctrine</h3>
+                <p>The strongest model orchestrates, one tier down develops, rote lanes go two tiers down, and the riskiest review gates use the orchestrator's own model. Every model earns its cost.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-purple">Tracked</div>
+                <h3>Review gates</h3>
+                <p>Every phase is adversarially reviewed before its merge. Fixes go back to the same warm agent; two failed rounds parks the phase for a human instead of looping.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-green">Light</div>
+                <h3>One plugin, zero config</h3>
+                <p>Install with a single command. No daemons, no setup wizards. Plans and boards are markdown in your repo, plus one small audit script.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-purple">Autonomous</div>
+                <h3>Night build pipeline</h3>
+                <p>End-of-day sweep: parallel reviewers over the day's commits, confident fixes applied, tests, deploy through your release path, summary for the morning. Fully unattended.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-amber">Adaptive</div>
+                <h3>Fresh sessions, not compaction</h3>
+                <p>Sessions run in shifts that end at clean board boundaries. The next session resumes with full acuity instead of a compacted one guessing at what it forgot.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-blue">Instant</div>
+                <h3>Plan from conversation</h3>
+                <p>Already discussing architecture? Use <code>--from-context</code> to distill the conversation into a structured plan. Add <code>--now</code> to skip confirmations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="badge badge-green">Durable</div>
+                <h3>Post-delivery maintenance</h3>
+                <p>Completed plans stay useful. Bug reports get structured debugging with maintenance logs, not ad-hoc guessing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Handoff Preview -->
+<section class="handoff-preview">
+    <div class="container">
+        <div class="section-label">The Board</div>
+        <h2>What the board <span>actually looks like</span></h2>
+        <p>Live state, not an archaeology dig. This is everything a fresh session reads to take over, and the checker verifies it against git before any work is dispatched.</p>
+        <div class="handoff-doc">
+            <div class="handoff-doc-header">
+                <span class="dot" style="background:#ef4444"></span>
+                <span class="dot" style="background:#f59e0b"></span>
+                <span class="dot" style="background:#10b981"></span>
+                &nbsp; BOARD.md
+            </div>
+            <div class="handoff-doc-body">
+<span class="hl"># Board &mdash; API Migration</span>
+
+<span class="dim">**Updated**: 2026-03-13 22:41 &middot; **Door**: wt-api-migration (open)</span>
+<span class="dim">**Progress**: 4/6 phases merged &middot; **Shipped**: abc1234</span>
+
+<span class="hl">## Status</span>
+<span class="hg">| 3. Auth middleware | merged | Dev-3 | middleware/auth.js | e19af02 |
+| 4. Session store   | merged | Dev-4 | services/session.js | b7d2c11 |</span>
+| 5. Rate limiting   | review | Dev-5 | services/rateLimiter.js | &mdash; |
+| 6. Legacy cutover  | todo   |  &mdash;    | routes/*.js | &mdash; |
+
+<span class="hl">## Decisions (settled)</span>
+- merge: FF to main &middot; deploy: npm run deploy &middot; checks: npm test
+
+<span class="hl">## Learnings (cumulative)</span>
+<span class="ha">- Redis keys follow `user:{id}:session` (TTL 30min)
+- Rate limiter must exempt /health &mdash; `services/rateLimiter.js:88`</span>
+
+<span class="hl">## Blockers</span>
+<span class="hr">- P6 waits on the DNS cutover window (user decision)</span>
+
+<span class="hg">$ node scripts/board-check.js api-migration
+  BOARD OK &mdash; 5 checks, 6 phases, 0 warnings</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modes -->
+<section class="modes">
+    <div class="container">
+        <div class="section-label">Execution Modes</div>
+        <h2>Your workflow, <span>your way</span></h2>
+        <div class="mode-comparison">
+            <div class="mode-card primary">
+                <h3>Autonomous <span class="mode-tag">Default</span></h3>
+                <p>Runs sprint after sprint and keeps the board current. Invoke it bare to resume the most recent active plan; <code>go status</code> just reports.</p>
+                <code>/justkeepswimming:go my-feature</code>
+            </div>
+            <div class="mode-card">
+                <h3>Interactive <span class="mode-tag">--interactive</span></h3>
+                <p>Pauses at sprint boundaries. Review results, adjust the plan, decide when to continue.</p>
+                <code>/justkeepswimming:go my-feature --interactive</code>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison -->
+<section class="comparison">
+    <div class="container">
+        <div class="section-label">Comparison</div>
+        <h2>Lightweight <span>by design</span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Just Keep Swimming</th>
+                    <th>Heavy workflow systems</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Installation</strong></td>
+                    <td>1 plugin command</td>
+                    <td>30+ files</td>
+                </tr>
+                <tr>
+                    <td><strong>State tracking</strong></td>
+                    <td>One live board, audited against git</td>
+                    <td>STATE.md, ROADMAP.md, CONTEXT.md, etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>Concepts to learn</strong></td>
+                    <td>Plan, Board, Sprint, Merge window</td>
+                    <td>Projects, Milestones, Phases, Waves, Audits</td>
+                </tr>
+                <tr>
+                    <td><strong>Parallelism</strong></td>
+                    <td>File-ownership lanes, review gates, one git owner</td>
+                    <td>Unmanaged, or none</td>
+                </tr>
+                <tr>
+                    <td><strong>Setup time</strong></td>
+                    <td>10 seconds</td>
+                    <td>Plugin install + configuration</td>
+                </tr>
+                <tr>
+                    <td><strong>Dependencies</strong></td>
+                    <td>None required</td>
+                    <td>Plugin ecosystem</td>
+                </tr>
+                <tr>
+                    <td><strong>Commands</strong></td>
+                    <td>2 commands + a status call</td>
+                    <td>10+ specialized agents</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Thinking Protocol -->
+<section class="thinking">
+    <div class="container">
+        <div class="section-label">The Thinking Protocol</div>
+        <h2>Agents that <span>think</span>, not just execute</h2>
+        <p>Most AI agents fail the same way: they pattern-match to common fixes and try them one by one. Just Keep Swimming ships with six problem-solving principles injected into every session &mdash; changing <em>how</em> the agent approaches problems.</p>
+
+        <div class="thinking-grid">
+            <div class="thinking-card">
+                <div class="principle-num">1</div>
+                <h3>Diagnose before you prescribe</h3>
+                <p>Gather facts before forming hypotheses. Every minute understanding the problem saves ten minutes of wrong-direction fixes.</p>
+                <div class="anti-pattern">Anti-pattern: "This looks like X, so let me try the usual fix."</div>
+                <div class="correct-pattern">Correct: "Let me verify what's actually happening first."</div>
+            </div>
+            <div class="thinking-card">
+                <div class="principle-num">2</div>
+                <h3>Trace the full chain</h3>
+                <p>List every condition required for success and verify each one. The broken condition is always the one nobody checks because it's "too basic."</p>
+            </div>
+            <div class="thinking-card">
+                <div class="principle-num">3</div>
+                <h3>Check what's actually there</h3>
+                <p>Run diagnostics with an open mind. Read the actual output &mdash; don't skim for confirmation of what you already believe.</p>
+            </div>
+            <div class="thinking-card">
+                <div class="principle-num">4</div>
+                <h3>Know the silent failures</h3>
+                <p>Systems fail without useful errors all the time. They fall back, return generic messages, or silently skip the broken path. Find the quiet one.</p>
+            </div>
+            <div class="thinking-card">
+                <div class="principle-num">5</div>
+                <h3>Minimum effective intervention</h3>
+                <p>Fix the root cause and only the root cause. The best fix is the smallest change. If you changed more than needed, you didn't understand the problem well enough.</p>
+            </div>
+            <div class="thinking-card">
+                <div class="principle-num">6</div>
+                <h3>Resist "the usual fix"</h3>
+                <p>If the user has tried everything, the obvious solutions are exhausted. The answer lives in the layer nobody checked yet. Don't re-run the playbook.</p>
+            </div>
+        </div>
+
+        <div class="thinking-meta">
+            <blockquote>"Don't be a solution-guesser. Be a condition-verifier."</blockquote>
+            <p>Every condition required for success must be verified. The one you skip is the one that's broken. v2 adds the Orchestrator's Corollary for scrum-lane work: delegate the noise, keep the signal. The protocol is customizable. Add your team's debugging lessons to THINKING.md and every future session inherits them.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Install -->
+<section class="install" id="install">
+    <div class="container">
+        <div class="section-label" style="color: var(--cyan);">Installation</div>
+        <h2>Up and running in 10 seconds</h2>
+        <p>Install as a plugin or copy two files. No dependencies.</p>
+        <div class="install-steps">
+            <div class="install-step">
+                <h3><span>1</span> Add the marketplace</h3>
+                <code>/plugin marketplace add cyber-qais/justkeepswimming</code>
+            </div>
+            <div class="install-step">
+                <h3><span>2</span> Install the plugin</h3>
+                <code>/plugin install justkeepswimming</code>
+            </div>
+            <div class="install-step">
+                <h3><span>3</span> Use it</h3>
+                <p>Open any Claude Code session and run:</p>
+                <code>/justkeepswimming:go my-feature</code>
+            </div>
+        </div>
+        <div class="install-steps" style="margin-top: 1.5rem;">
+            <div class="install-step">
+                <h3>Alternative: Manual install</h3>
+                <code>mkdir -p ~/.claude/commands/justkeepswimming<br>
+cp commands/justkeepswimming/*.md ~/.claude/commands/justkeepswimming/</code>
+            </div>
+        </div>
+        <div class="install-steps" style="margin-top: 1.5rem;">
+            <div class="install-step">
+                <h3>Alternative: npm</h3>
+                <code>npm install justkeepswimming</code>
+            </div>
+        </div>
+        <div class="install-note">
+            Works with any Claude Code project. Optionally pairs with the <a href="https://github.com/obra/superpowers">superpowers plugin</a> for auto-generated plans.
+            <br>Available on <a href="https://github.com/cyber-qais/justkeepswimming">GitHub</a> &middot; <a href="https://www.npmjs.com/package/justkeepswimming">npm</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p><strong>Just Keep Swimming</strong> v2.4.2 &middot; Apache 2.0 License</p>
+    <p style="margin-top:0.5rem;">Made for <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a> by <a href="https://github.com/cyber-qais">Qais Alkurdi</a></p>
+    <p style="margin-top:0.5rem; font-size: 0.8rem; color: var(--slate-400);">
+        <a href="https://github.com/cyber-qais/justkeepswimming">GitHub</a> &middot;
+        <a href="https://www.npmjs.com/package/justkeepswimming">npm</a>
+    </p>
+</footer>
+
+</body>
+</html>
